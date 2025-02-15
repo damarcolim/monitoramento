@@ -1,36 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoramento de Materiais</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
     </style>
 </head>
-
 <body>
 
     <h2>Cadastro de Material</h2>
@@ -60,11 +40,11 @@
     </table>
 
     <script>
-        const apiUrl = "https://script.google.com/macros/s/AKfycbwMCVBriheqV3ef0XyFIoVBMh4ocX79IFw4XnAFfpqQSWaPPVNw2PPHwX5zQwcLD4Ph1w/execT"; // Substitua pela URL do Apps Script
+        const apiUrl = "https://script.google.com/macros/s/AKfycbwMCVBriheqV3ef0XyFIoVBMh4ocX79IFw4XnAFfpqQSWaPPVNw2PPHwX5zQwcLD4Ph1w/exec"; // Substitua pela URL do Apps Script
 
-        document.getElementById("materialForm").addEventListener("submit", function (event) {
+        document.getElementById("materialForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Evita recarregar a página
-
+            
             // Coletar os dados do formulário
             const dados = {
                 nomeUC: document.getElementById("nomeUC").value,
@@ -78,31 +58,31 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dados)
             })
-                .then(response => response.text())
-                .then(data => {
-                    alert(data); // Exibe a resposta do servidor
-                    carregarDados(); // Atualiza a tabela após o envio
-                })
-                .catch(error => console.error("Erro ao enviar dados:", error));
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Exibe a resposta do servidor
+                carregarDados(); // Atualiza a tabela após o envio
+            })
+            .catch(error => console.error("Erro ao enviar dados:", error));
         });
 
         // Função para carregar os dados da planilha e exibir na tabela
         function carregarDados() {
             fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    let tabela = document.getElementById("dadosTabela");
-                    tabela.innerHTML = ""; // Limpa a tabela antes de atualizar
+            .then(response => response.json())
+            .then(data => {
+                let tabela = document.getElementById("dadosTabela");
+                tabela.innerHTML = ""; // Limpa a tabela antes de atualizar
 
-                    for (let i = 1; i < data.length; i++) { // Começa da linha 2 (ignora os cabeçalhos)
-                        let row = tabela.insertRow();
-                        for (let j = 0; j < data[i].length; j++) {
-                            let cell = row.insertCell();
-                            cell.textContent = data[i][j];
-                        }
+                for (let i = 1; i < data.length; i++) { // Começa da linha 2 (ignora os cabeçalhos)
+                    let row = tabela.insertRow();
+                    for (let j = 0; j < data[i].length; j++) {
+                        let cell = row.insertCell();
+                        cell.textContent = data[i][j];
                     }
-                })
-                .catch(error => console.error("Erro ao carregar dados:", error));
+                }
+            })
+            .catch(error => console.error("Erro ao carregar dados:", error));
         }
 
         // Carrega os dados ao abrir a página
@@ -110,5 +90,4 @@
     </script>
 
 </body>
-
 </html>
